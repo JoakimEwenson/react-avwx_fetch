@@ -153,6 +153,7 @@ export default function MainPage() {
                   minLength="3"
                   maxLength="4"
                   placeholder="ICAO/IATA"
+                  value={stationId}
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck="false"
