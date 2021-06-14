@@ -24,9 +24,9 @@ export default function MainPage() {
     }
   };
 
-  const toInputUppercase = e => {
+  const toInputUppercase = (e) => {
     e.target.value = ("" + e.target.value).toUpperCase();
-  }
+  };
 
   function clearData() {
     setMetar(null);
@@ -54,20 +54,26 @@ export default function MainPage() {
       console.log(tafResponse);
       console.log(stationResponse);
 
-      // Write to page
-      if (metarResponse.raw && tafResponse.raw && stationResponse.name) {
-        setError(null);
-        setMetar(metarResponse);
-        setTaf(tafResponse);
-        setStationInfo(stationResponse);
-        setTimestamp(new Date().getTime());
-      } else {
-        if (metarResponse.error) {
-          setError(metarResponse.error);
-        } else {
-          setError("No response.");
-        }
+      // Clear old errors
+      setError(null);
+
+      // Check if response contains errors and if so, display them
+      if (metarResponse && metarResponse.error) {
+        setError(metarResponse.error);
       }
+      if (tafResponse && tafResponse.error) {
+        setError(tafResponse.error);
+      }
+      if (stationResponse && stationResponse.error) {
+        setError(stationResponse.error);
+      }
+
+      // Fill the void
+      metarResponse ? setMetar(metarResponse) : setMetar(null);
+      tafResponse ? setTaf(tafResponse) : setTaf(null);
+      stationResponse ? setStationInfo(stationResponse) : setStationInfo(null);
+      setTimestamp(new Date().getTime());
+
       setIsLoading(false);
     }
     if (stationId !== null && stationId !== undefined) {
@@ -106,13 +112,20 @@ export default function MainPage() {
                   <>
                     <p className="text-2xl font-semibold">
                       {stationInfo.name} ({stationInfo.icao} /{" "}
-                      <a
-                        href={`https://flightradar24.com/data/airports/${stationInfo.iata.toLowerCase()}/departures`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {stationInfo.iata}
-                      </a>
+                      {stationInfo.iata !== null && stationInfo.iata !== undefined ? (
+                        <>
+                          <a
+                            href={`https://flightradar24.com/data/airports/${stationInfo.iata.toLowerCase()}/departures`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {stationInfo.iata}
+                          </a>
+                        </>
+                      ) : (
+                        <>{stationInfo.iata}
+                        </>
+                      )}
                       )
                     </p>
                     <p className="font-light">
@@ -126,7 +139,7 @@ export default function MainPage() {
                     <div className="font-mono">{metar.raw}</div>
                   </>
                 )}
-                {taf !== null && (
+                {taf && (
                   <>
                     <h4 className="text-xl font-semibold mt-5">TAF</h4>
                     <div className="font-mono">{taf.raw}</div>
@@ -134,7 +147,9 @@ export default function MainPage() {
                 )}
                 {timestamp !== null && (
                   <>
-                    <p className="text-xs font-light mt-5">Data fetched at {new Date(timestamp).toLocaleTimeString("sv-SE")} local device time</p>
+                    <p className="text-xs font-light mt-5">
+                      Data fetched at {new Date(timestamp).toLocaleTimeString("sv-SE")} local device time
+                    </p>
                   </>
                 )}
               </div>
@@ -153,7 +168,7 @@ export default function MainPage() {
                   minLength="3"
                   maxLength="4"
                   placeholder="ICAO/IATA"
-                  value={stationId}
+                  defaultValue={stationId}
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck="false"
@@ -171,8 +186,13 @@ export default function MainPage() {
           </form>
         </div>
       </div>
-      <p className="text-center text-xs text-gray-100">A small service created by <a href="https://ewenson.se">Joakim Ewenson</a></p>
-      <p className="text-center text-xs text-gray-100">Data provided by <a href="https://avwx.rest">AVWX.rest</a> and icon by <a href="https://en.wikipedia.org/wiki/File:Circle-icons-weather.svg">Elegant Themes</a></p>
+      <p className="text-center text-xs text-gray-100">
+        A small service created by <a href="https://ewenson.se">Joakim Ewenson</a>
+      </p>
+      <p className="text-center text-xs text-gray-100 mb-10">
+        Data provided by <a href="https://avwx.rest">AVWX.rest</a> and icon by{" "}
+        <a href="https://en.wikipedia.org/wiki/File:Circle-icons-weather.svg">Elegant Themes</a>
+      </p>
     </div>
   );
 }
