@@ -170,8 +170,8 @@ export default function MainPage() {
           </form>
         </div>
       </div>
-      <p className="text-center text-xs text-gray-100">A small service created by <a href="https://ewenson.se">Joakim Ewenson</a>.</p>
-      <p className="text-center text-xs text-gray-100">Data provided by <a href="https://avwx.rest">AVWX.rest</a></p>
+      <p className="text-center text-xs text-gray-100">A small service created by <a href="https://ewenson.se">Joakim Ewenson</a></p>
+      <p className="text-center text-xs text-gray-100">Data provided by <a href="https://avwx.rest">AVWX.rest</a> and icon by <a href="https://en.wikipedia.org/wiki/File:Circle-icons-weather.svg">Elegant Themes</a></p>
     </div>
   );
 }
