@@ -32,6 +32,7 @@ export default function MainPage() {
     setMetar(null);
     setTaf(null);
     setStationInfo(null);
+    setTimestamp(null);
   }
 
   useEffect(() => {
