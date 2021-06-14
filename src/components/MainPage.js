@@ -98,7 +98,7 @@ export default function MainPage() {
             <div className="bg-white rounded-xl my-10 p-5">
               {isLoading && (
                 <>
-                  <p>Fetching data...</p>
+                  <p className="font-mono text-center">Fetching data...</p>
                 </>
               )}
               <div id="results">
@@ -134,7 +134,7 @@ export default function MainPage() {
                 )}
                 {timestamp !== null && (
                   <>
-                    <p className="text-xs font-light mt-5">Data fetched at {new Date(timestamp).toLocaleTimeString("sv-SE")} local time.</p>
+                    <p className="text-xs font-light mt-5">Data fetched at {new Date(timestamp).toLocaleTimeString("sv-SE")} local device time</p>
                   </>
                 )}
               </div>
@@ -170,6 +170,8 @@ export default function MainPage() {
           </form>
         </div>
       </div>
+      <p className="text-center text-xs text-gray-100">A small service created by <a href="https://ewenson.se">Joakim Ewenson</a>.</p>
+      <p className="text-center text-xs text-gray-100">Data provided by <a href="https://avwx.rest">AVWX.rest</a></p>
     </div>
   );
 }
