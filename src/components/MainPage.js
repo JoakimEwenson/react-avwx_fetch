@@ -145,7 +145,7 @@ export default function MainPage() {
                   type="text"
                   id="station"
                   maxLength="4"
-                  placeholder="ICAO"
+                  placeholder="ICAO/IATA"
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck="false"
