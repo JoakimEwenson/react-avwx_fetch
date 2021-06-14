@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 export default function MainPage() {
   const { urlStation } = useParams();
   const [stationId, setStationId] = useState(urlStation ? urlStation : null);
-  const [timestamp] = useState(new Date().getTime());
+  const [timestamp, setTimestamp] = useState(urlStation ? new Date().getTime() : null);
   const [metar, setMetar] = useState(null);
   const [taf, setTaf] = useState(null);
   const [stationInfo, setStationInfo] = useState(null);
@@ -23,6 +23,10 @@ export default function MainPage() {
       setError("Check input.");
     }
   };
+
+  const toInputUppercase = e => {
+    e.target.value = ("" + e.target.value).toUpperCase();
+  }
 
   function clearData() {
     setMetar(null);
@@ -55,6 +59,7 @@ export default function MainPage() {
         setMetar(metarResponse);
         setTaf(tafResponse);
         setStationInfo(stationResponse);
+        setTimestamp(new Date().getTime());
       } else {
         if (metarResponse.error) {
           setError(metarResponse.error);
@@ -144,11 +149,13 @@ export default function MainPage() {
                   className="bg-gray-100 rounded w-full px-4 py-2 text-center font-semibold"
                   type="text"
                   id="station"
+                  minLength="3"
                   maxLength="4"
                   placeholder="ICAO/IATA"
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck="false"
+                  onInput={toInputUppercase}
                   autoFocus
                   required
                 />
