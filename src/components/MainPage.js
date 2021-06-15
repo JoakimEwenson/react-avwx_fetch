@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 export default function MainPage() {
   const { urlStation } = useParams();
   const [stationId, setStationId] = useState(urlStation ? urlStation : null);
+  const [requestTimestamp, setRequestTimestamp] = useState(0);
   const [timestamp, setTimestamp] = useState(urlStation ? new Date().getTime() : null);
   const [metar, setMetar] = useState(null);
   const [taf, setTaf] = useState(null);
@@ -15,9 +16,12 @@ export default function MainPage() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    var station = document.getElementById("station").value.toUpperCase();
+    var station = document.getElementById("station").value.trim().toUpperCase();
     if (station.length === 3 || station.length === 4) {
-      window.history.pushState({}, null, `/${station}`);
+      setRequestTimestamp(new Date().getTime());
+      if (station !== stationId) {
+        window.history.pushState({}, null, `/${station}`);
+      }
       setStationId(station);
     } else {
       setError("Check input.");
@@ -86,7 +90,7 @@ export default function MainPage() {
       }, 1800000);
     }
     return () => clearInterval(interval);
-  }, [stationId]);
+  }, [stationId, requestTimestamp]);
 
   // Output
   return (
@@ -123,8 +127,7 @@ export default function MainPage() {
                           </a>
                         </>
                       ) : (
-                        <>{stationInfo.iata}
-                        </>
+                        <>{stationInfo.iata}</>
                       )}
                       )
                     </p>
