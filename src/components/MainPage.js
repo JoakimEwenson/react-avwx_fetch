@@ -80,7 +80,7 @@ export default function MainPage() {
 
       setIsLoading(false);
       if (metarResponse) {
-        document.title = `WX ${metarResponse.iata}`
+        document.title = `WX ${metarResponse.station}`
       }
     }
     if (stationId !== null && stationId !== undefined) {
