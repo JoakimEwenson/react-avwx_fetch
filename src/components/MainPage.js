@@ -79,6 +79,9 @@ export default function MainPage() {
       setTimestamp(new Date().getTime());
 
       setIsLoading(false);
+      if (metarResponse) {
+        document.title = `WX ${metarResponse.iata}`
+      }
     }
     if (stationId !== null && stationId !== undefined) {
       // Fetch initial data
