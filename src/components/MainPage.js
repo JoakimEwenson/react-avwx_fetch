@@ -12,7 +12,7 @@ export default function MainPage() {
   const [taf, setTaf] = useState(null);
   const [stationInfo, setStationInfo] = useState(null);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -80,7 +80,7 @@ export default function MainPage() {
 
       setIsLoading(false);
       if (metarResponse) {
-        document.title = `WX ${metarResponse.station}`
+        document.title = `WX ${metarResponse.station}`;
       }
     }
     if (stationId !== null && stationId !== undefined) {
@@ -111,7 +111,14 @@ export default function MainPage() {
             <div className="bg-white rounded-xl my-10 p-5">
               {isLoading && (
                 <>
-                  <p className="font-mono text-center">Fetching data...</p>
+                <h6 class="font-semibold text-xl text-center">Fetching data...</h6>
+                <div className="loading">
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                </div>
                 </>
               )}
               <div id="results">
