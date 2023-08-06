@@ -142,7 +142,7 @@ export default function MainPage() {
                       )
                     </p>
                     <p className="font-light">
-                      Elevation: {stationInfo.elevation_m} m / {stationInfo.elevation_ft} ft
+                      Elevation: {stationInfo.elevation_m} m / {stationInfo.elevation_ft} ft | <a href={`https://www.flightradar24.com/airport/${stationInfo.iata.toLowerCase()}`}>Show on FR24 map</a>
                     </p>
                   </>
                 )}
